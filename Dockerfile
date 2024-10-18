@@ -1,32 +1,32 @@
-# Stage 1: Build the React app
+# Step 1: Build the React app
 FROM node:18-alpine AS build
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock) to the working directory
+# Copy the package.json and package-lock.json files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application files
 COPY . .
 
-# Build the React app
+# Build the React app for production
 RUN npm run build
 
-# Stage 2: Serve the app with a lightweight web server
+# Step 2: Serve the app with NGINX
 FROM nginx:alpine
 
-# Remove the default Nginx website
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy the built React app from the previous stage to the Nginx web directory
+# Copy the build files from the previous stage to NGINX's web directory
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port 80
+# Copy a custom NGINX configuration (optional)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80 for the container
 EXPOSE 80
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
