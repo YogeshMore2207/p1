@@ -33,7 +33,7 @@ pipeline {
        }
        stage('Deploy') {
             steps {  
-                   sh 'docker run -itd --name My-first-container -p 80:5000 revoltrv/dev:latest'
+                   sh 'docker run -itd --name My-first-container -p 80:80 revoltrv/dev:latest'
                 }
             }
        }
