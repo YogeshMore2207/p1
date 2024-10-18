@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Github', url: 'https://github.com/YogeshMore2207/p1.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Github', url: 'https://github.com/YogeshMore2207/react-app.git']])
                 sh 'npm install'
                 // sh 'npm run build'
             }
@@ -33,11 +33,7 @@ pipeline {
        }
        stage('Deploy') {
             steps {  
-                script {
-                   def dockerCmd = 'docker run -itd --name My-first-container -p 80:5000 indumathicloud001/dev:latest'
-                   sshagent(['sshkeypair']) {
-                   sh "ssh -o StrictHostKeyChecking=no ubuntu@65.0.4.107 ${dockerCmd}"
-                   }
+                   sh 'docker run -itd --name My-first-container -p 80:5000 revoltrv/dev:latest'               
                 }
             }
        }
