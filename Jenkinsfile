@@ -33,7 +33,7 @@ pipeline {
        }
        stage('Deploy') {
             steps {  
-                   sh 'docker run -d --name My-first-container -p 3000:3000 revoltrv/dev:latest'
+                   sh 'docker run -d --name My-first-container -p 1000:5000 revoltrv/dev:latest'
                 }
             }
        }
